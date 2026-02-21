@@ -13,6 +13,11 @@
     src: url(../fonts/Passion_One/PassionOne-Black.ttf);
 }
 
+@font-face {
+    font-family: "londrina-shadow";
+    src: url(../fonts/Londrina_Shadow/LondrinaShadow-Regular.ttf);
+}
+
 body
 {
     background-color: #19232F;
@@ -60,5 +65,83 @@ header a
 .left-horizontal-top-line
 {
     border-top: 2px solid #514460;
-    width: 50px;
+    width: 75px;
+    margin-left: 0.5vw;
+}
+
+.left-vertical-top-line
+{
+    border-left: 2px solid #514460;
+    height: 75px;
+    margin-top: 0.5vw;
+}
+
+.right-horizontal-top-line
+{
+    border-top: 2px solid #514460;
+    width: 75px;
+    margin-right: 0.5vw;
+}
+
+.right-vertical-top-line
+{
+    border-right: 2px solid #514460;
+    height: 75px;
+    margin-top: 0.5vw;
+}
+
+.hero-text
+{
+    font-family: "londrina-shadow";
+    color: #514460;
+    text-align: center;
+    font-size: 320px;
+    font-weight: 200;
+    position: relative;
+    margin: 0;
+    margin-top: 4vh;
+}
+
+.hero-image
+{
+    width: 27vw;
+    height: auto;
+    position: absolute;
+    top: 15vh;
+    left: 37vw;
+}
+
+.bottom-corner-lines
+{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10vh;
+}
+
+.left-vertical-bottom-line
+{
+    border-left: 2px solid #514460;
+    height: 75px;
+    margin-bottom: 0.5vw;
+}
+
+.left-horizontal-bottom-line
+{
+    border-top: 2px solid #514460;
+    width: 75px;
+    margin-left: 0.5vw;
+}
+
+.right-vertical-bottom-line
+{
+    border-right: 2px solid #514460;
+    height: 75px;
+    margin-bottom: 0.5vw;
+}
+
+.right-horizontal-bottom-line
+{
+    border-top: 2px solid #514460;
+    width: 75px;
+    margin-right: 0.5vw;
 }
