@@ -21,6 +21,7 @@
 body
 {
     background-color: #19232F;
+    margin: 0;
 }
 
 header
@@ -29,7 +30,7 @@ header
     justify-content: space-between;
     font-family: "passion-one-regular";
     font-size: 23px;
-    padding: 1.5vw;
+    padding: 2vw;
 }
 
 .nav-buttons ul
@@ -53,7 +54,8 @@ header a
 
 .hero
 {
-    padding: 1.5vw;
+    padding: 2vw;
+    margin-bottom: 10vh;
 }
 
 .top-corner-lines
@@ -115,7 +117,7 @@ header a
 {
     display: flex;
     justify-content: space-between;
-    margin-top: 10vh;
+    margin-top: 13vh;
 }
 
 .left-vertical-bottom-line
@@ -144,4 +146,43 @@ header a
     border-top: 2px solid #514460;
     width: 75px;
     margin-right: 0.5vw;
+}
+
+.who-am-i-box
+{
+    padding: 2vw;
+    background-color: #514460;
+}
+
+.who-am-i
+{
+    font-family: "londrina-shadow";
+    color: black;
+    font-size: 350px;
+    font-weight: 200;
+    margin: 0;
+    margin-top: 7vh;
+}
+
+.who-am-i-text
+{
+    font-family: "passion-one-regular";
+    font-size: 40px;
+    width: 60%;
+    margin-top: -1vh;
+}
+
+.github-logo
+{
+    width: 4vw;
+    height: auto;
+}
+
+.second-pic-of-me
+{
+    width: 21vw;
+    height: auto;
+    position: absolute;
+    top: 118vh;
+    left: 75vw;
 }
