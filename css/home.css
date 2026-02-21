@@ -1,0 +1,64 @@
+@font-face {
+    font-family: "passion-one-regular";
+    src: url(../fonts/Passion_One/PassionOne-Regular.ttf);
+}
+
+@font-face {
+    font-family: "passion-one-bold";
+    src: url(../fonts/Passion_One/PassionOne-Bold.ttf);
+}
+
+@font-face {
+    font-family: "passion-one-black";
+    src: url(../fonts/Passion_One/PassionOne-Black.ttf);
+}
+
+body
+{
+    background-color: #19232F;
+}
+
+header
+{
+    display: flex;
+    justify-content: space-between;
+    font-family: "passion-one-regular";
+    font-size: 23px;
+    padding: 1.5vw;
+}
+
+.nav-buttons ul
+{
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    gap: 2vw;
+    margin: 0;
+}
+
+header a
+{
+    text-decoration: none;
+    color: black;
+    padding-block: 1vh;
+    padding-inline: 1.5vw;
+    background-color: #514460;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.35);
+}
+
+.hero
+{
+    padding: 1.5vw;
+}
+
+.top-corner-lines
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-horizontal-top-line
+{
+    border-top: 2px solid #514460;
+    width: 50px;
+}
