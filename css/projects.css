@@ -1,0 +1,46 @@
+@font-face {
+    font-family: "passion-one-regular";
+    src: url(../fonts/Passion_One/PassionOne-Regular.ttf);
+}
+
+@font-face {
+    font-family: "passion-one-bold";
+    src: url(../fonts/Passion_One/PassionOne-Bold.ttf);
+}
+
+@font-face {
+    font-family: "passion-one-black";
+    src: url(../fonts/Passion_One/PassionOne-Black.ttf);
+}
+
+@font-face {
+    font-family: "londrina-shadow";
+    src: url(../fonts/Londrina_Shadow/LondrinaShadow-Regular.ttf);
+}
+
+body
+{
+    background-color: #19232F;
+    margin: 0;
+    font-family: "passion-one-regular";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #514460;
+    flex-direction: column;
+}
+
+.title
+{
+    font-size: 120px;
+    font-weight: 100;
+    margin: 0;
+}
+
+.subtitle
+{
+    font-size: 40px;
+    font-weight: 100;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.5);
+}
