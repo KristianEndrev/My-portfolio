@@ -18,29 +18,320 @@
     src: url(../fonts/Londrina_Shadow/LondrinaShadow-Regular.ttf);
 }
 
-body
-{
-    background-color: #19232F;
+body {
     margin: 0;
-    font-family: "passion-one-regular";
+    min-height: 100vh;
+    padding: 3vw 0 5vw;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #514460;
     flex-direction: column;
+    align-items: center;
+    font-family: "passion-one-regular";
+    background:
+        radial-gradient(circle at top left, rgba(81, 68, 96, 0.18), transparent 28%),
+        linear-gradient(135deg, #162030 0%, #1c2740 55%, #15203a 100%);
+    color: #ffffff;
 }
 
-.title
-{
-    font-size: 120px;
+.title {
+    font-size: clamp(72px, 8vw, 120px);
     font-weight: 100;
     margin: 0;
+    line-height: 1;
+    color: #514460;
 }
 
-.subtitle
-{
-    font-size: 40px;
+.subtitle {
+    font-size: clamp(22px, 2.3vw, 40px);
     font-weight: 100;
-    margin: 0;
+    margin: 0.4vw 0 0;
     color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+}
+
+.projects {
+    width: min(96vw, 1460px);
+    margin-top: 7vh;
+    display: flex;
+    flex-direction: column;
+    gap: 2.2vh;
+}
+
+.year-box {
+    border-radius: 1.8vw;
+    overflow: hidden;
+    background: linear-gradient(120deg, rgba(38, 47, 72, 0.86), rgba(27, 38, 66, 0.92));
+    border: 1px solid rgba(81, 68, 96, 0.35);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22);
+}
+
+.year-header {
+    width: 100%;
+    border: none;
+    background: transparent;
+    padding: 2vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.year-info {
+    display: flex;
+    align-items: center;
+    gap: 2vw;
+}
+
+.year-title {
+    font-size: clamp(64px, 7vw, 104px);
+    color: rgba(119, 93, 137, 0.85);
+    font-family: "passion-one-bold";
+}
+
+.year-count {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: clamp(18px, 1.9vw, 36px);
+    color: rgba(255, 255, 255, 0.72);
+    font-weight: 700;
+}
+
+.year-arrow {
+    width: 1vw;
+    min-width: 16px;
+    height: 1vw;
+    min-height: 16px;
+    border-right: 3px solid #6d5a80;
+    border-bottom: 3px solid #6d5a80;
+    transform: rotate(45deg);
+    transition: transform 0.3s ease;
+    margin-right: 0.8vw;
+}
+
+.year-box.active .year-arrow {
+    transform: rotate(-135deg);
+}
+
+.year-content {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.35s ease;
+    border-top: 1px solid rgba(81, 68, 96, 0.22);
+    background: rgba(22, 31, 54, 0.35);
+}
+
+.admin-upload-panel {
+    margin: 1.6vw 2.4vw 0;
+    padding: 1.3vw;
+    border-radius: 1vw;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(81, 68, 96, 0.24);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2vw;
+}
+
+.upload-panel-text h4 {
+    margin: 0 0 6px;
+    font-size: clamp(22px, 1.7vw, 30px);
+    font-weight: 100;
+    color: #f2edf7;
+}
+
+.upload-panel-text p {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgba(255, 255, 255, 0.64);
+    font-size: 15px;
+}
+
+.file-input-hidden {
+    display: none;
+}
+
+.upload-panel-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.file-select-btn,
+.file-add-btn {
+    border: none;
+    border-radius: 999px;
+    padding: 12px;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    transition: 0.2s ease;
+}
+
+.file-select-btn {
+    background: rgba(109, 90, 128, 0.18);
+    color: #e9ddf6;
+    border: 1px solid rgba(109, 90, 128, 0.45);
+}
+
+.file-add-btn {
+    background: #6d5a80;
+    color: #ffffff;
+}
+
+.file-select-btn:hover,
+.file-add-btn:hover,
+.project-action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.24);
+}
+
+.selected-file-name {
+    min-width: 180px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.project-list {
+    padding: 1.6vw 2.4vw 2vw;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4vw;
+}
+
+.project-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2vw;
+    padding: 2vw 2.2vw;
+    border-radius: 1.4vw;
+    background: rgba(22, 31, 54, 0.72);
+    border: 1px solid rgba(81, 68, 96, 0.18);
+}
+
+.project-top-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.project-name {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: clamp(22px, 2vw, 34px);
+    font-weight: 700;
+    color: #f4f3f8;
+}
+
+.project-period {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: rgba(109, 90, 128, 0.18);
+    border: 1px solid rgba(109, 90, 128, 0.24);
+    color: rgba(232, 223, 244, 0.72);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.project-description {
+    margin: 0;
+    max-width: 980px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: clamp(16px, 1.2vw, 22px);
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.project-card-right {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+}
+
+.project-action-btn {
+    text-decoration: none;
+    border-radius: 1vw;
+    padding: 18px 26px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: clamp(14px, 1vw, 18px);
+    font-weight: 700;
+    transition: 0.2s ease;
+    border: 1px solid rgba(109, 90, 128, 0.32);
+    color: #ffffff;
+    background: rgba(109, 90, 128, 0.28);
+}
+
+.secondary-btn {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.year-header:focus-visible,
+.project-action-btn:focus-visible,
+.file-select-btn:focus-visible,
+.file-add-btn:focus-visible {
+    outline: 2px solid #c8b1dd;
+    outline-offset: 4px;
+}
+
+@media (max-width: 980px) {
+    .admin-upload-panel,
+    .project-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .upload-panel-actions,
+    .project-card-right {
+        width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    .projects {
+        width: 94vw;
+    }
+
+    .year-box {
+        border-radius: 18px;
+    }
+
+    .year-header {
+        padding: 22px 18px;
+    }
+
+    .year-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .admin-upload-panel {
+        margin: 18px 18px 0;
+        padding: 18px;
+        border-radius: 16px;
+    }
+
+    .project-list {
+        padding: 18px 18px 22px;
+        gap: 14px;
+    }
+
+    .project-card {
+        padding: 18px;
+        border-radius: 16px;
+    }
+
+    .project-action-btn {
+        width: 100%;
+        text-align: center;
+        border-radius: 14px;
+    }
 }
