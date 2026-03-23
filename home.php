@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['username'])) {
+    header("Location: log_in.php");
+    exit;
+}
+
+$isAdmin = isset($_SESSION['role_id']) && $_SESSION['role_id'] == 1;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,10 +19,15 @@
 <body>
     <header>
         <div class="home-button">
-            <a href="home.html">HOME</a>
+            <a href="home.php">HOME</a>
         </div>
     <div class="nav-buttons">
         <ul>
+            <?php
+            if($isAdmin) {
+                echo "<li><a href='admin.php'>ADMIN</a></li>";
+            }
+            ?>
             <li><a href="projects.html">PROJECTS</a></li>
             <li><a href="professional-skills.html">PROFESSIONAL SKILLS</a></li>
             <li><a href="documentation.html">DOCUMENTATION</a></li>
