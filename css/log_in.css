@@ -104,3 +104,22 @@ input
     margin-top: 3vh;
     font-size: 20px;
 }
+
+.error-box
+{
+    color: white;
+    font-size: 22px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 1vw;
+    max-width: 30vw;
+    flex-wrap: wrap;
+    margin-top: 1vw;
+}
+
+.error-box p
+{  
+    margin: 0;
+}

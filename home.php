@@ -18,7 +18,7 @@
             <li><a href="documentation.html">DOCUMENTATION</a></li>
             <li><a href="">ABOUT ME</a></li>
             <li><a href="">GET IN TOUCH</a></li>
-            <li><a class="log-out" href="">LOG OUT</a></li>
+            <li><a class="log-out" href="log_out.php">LOG OUT</a></li>
         </ul>
     </div>
     </header>
@@ -66,10 +66,10 @@
                         skills, along with a structured approach to planning, documentation, 
                         and reflection - ready to contribute effectively to any IT project.</p>
                 </div>
-                        <div class="professional-skills-box"><a href="">PROFESSIONAL SKILLS</a></div>
+                        <div class="professional-skills-box"><a href="professional-skills.html">PROFESSIONAL SKILLS</a></div>
                     <div class="skills-boxes">
-                        <div class="documentation-box"><a href="">DOCUMENTATION</a></div>
-                        <div class="projects-box"><a href="">PROJECTS</a></div>
+                        <div class="documentation-box"><a href="documentation.html">DOCUMENTATION</a></div>
+                        <div class="projects-box"><a href="projects.html">PROJECTS</a></div>
                     </div>
             </div>
             <h1 class="my-skills-header">MY SKILLS</h1>
