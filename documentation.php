@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['username'])) {
+    header("Location: log_in.php");
+    exit;
+}
+
+$isAdmin = isset($_SESSION['role_id']) && $_SESSION['role_id'] == 1;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,6 +81,24 @@
                     <h2 class="documentation-content-title" id="documentationContentTitle">Project Plans</h2>
                     <p class="documentation-content-count" id="documentationContentCount">4 documents available</p>
                 </div>
+
+                <?php
+                    if ($isAdmin) {
+                        echo "<div class='admin-upload-panel'>
+                            <div class='upload-panel-text'>
+                                <h4>Add Documentation File</h4>
+                                <p>Select a file and then use your own backend later to save it.</p>
+                            </div>
+
+                            <div class='upload-panel-actions'>
+                                <input type='file' id='file-upload-documentation' class='file-input-hidden'>
+                                <button type='button' class='file-select-btn' data-target='file-upload-documentation'>Choose File</button>
+                                <span class='selected-file-name'>No file selected</span>
+                                <button type='button' class='file-add-btn'>Add File</button>
+                            </div>
+                        </div>";
+                    }
+                ?>
 
                 <div class="documentation-cards" id="documentationCards"></div>
             </section>

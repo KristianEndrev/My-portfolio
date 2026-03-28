@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['username'])) {
+    header("Location: log_in.php");
+    exit;
+}
+
+$isAdmin = isset($_SESSION['role_id']) && $_SESSION['role_id'] == 1;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -89,11 +99,11 @@
             <span class="moving-active-dot" id="movingActiveDot"></span>
         </section>
 
-        <p class="skills-helper-text hidden" id="skillsHelperText">
+        <p class="skills-helper-text" id="skillsHelperText">
             Select a category above to view your professional documents
         </p>
 
-        <section class="skills-details visible" id="skillsDetails">
+        <section class="skills-details" id="skillsDetails">
             <div class="skills-details-header">
                 <div class="skills-details-icon-box">
                     <span class="skills-details-icon" id="detailsIconHolder">
@@ -111,7 +121,24 @@
                     <p id="detailsSubtitle">Browse and access your documents</p>
                 </div>
             </div>
+            <div class="skills-details-heading">
+                    <?php
+                        if ($isAdmin) {
+                            echo "<div class='admin-upload-panel'>
+                                <div class='upload-panel-text'>
+                                    <h4>Add Professional Skills File</h4>
+                                    <p>Select a file and then use your own backend later to save it.</p>
+                                </div>
 
+                                <div class='upload-panel-actions'>
+                                    <input type='file' id='file-upload-skills' class='file-input-hidden'>
+                                    <button type='button' class='file-select-btn' data-target='file-upload-skills'>Choose File</button>
+                                    <span class='selected-file-name'>No file selected</span>
+                                    <button type='button' class='file-add-btn'>Add File</button>
+                                </div>
+                            </div>";
+                        }
+                    ?>
             <div class="skills-documents-grid" id="skillsDocumentsGrid"></div>
         </section>
     </main>

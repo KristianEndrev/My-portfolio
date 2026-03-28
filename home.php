@@ -28,9 +28,9 @@ $isAdmin = isset($_SESSION['role_id']) && $_SESSION['role_id'] == 1;
                 echo "<li><a href='admin.php'>ADMIN</a></li>";
             }
             ?>
-            <li><a href="projects.html">PROJECTS</a></li>
-            <li><a href="professional-skills.html">PROFESSIONAL SKILLS</a></li>
-            <li><a href="documentation.html">DOCUMENTATION</a></li>
+            <li><a href="projects.php">PROJECTS</a></li>
+            <li><a href="professional_skills.php">PROFESSIONAL SKILLS</a></li>
+            <li><a href="documentation.php">DOCUMENTATION</a></li>
             <li><a href="">ABOUT ME</a></li>
             <li><a href="">GET IN TOUCH</a></li>
             <li><a class="log-out" href="log_out.php">LOG OUT</a></li>
@@ -81,10 +81,10 @@ $isAdmin = isset($_SESSION['role_id']) && $_SESSION['role_id'] == 1;
                         skills, along with a structured approach to planning, documentation, 
                         and reflection - ready to contribute effectively to any IT project.</p>
                 </div>
-                        <div class="professional-skills-box"><a href="professional-skills.html">PROFESSIONAL SKILLS</a></div>
+                        <div class="professional-skills-box"><a href="professional_skills.php">PROFESSIONAL SKILLS</a></div>
                     <div class="skills-boxes">
-                        <div class="documentation-box"><a href="documentation.html">DOCUMENTATION</a></div>
-                        <div class="projects-box"><a href="projects.html">PROJECTS</a></div>
+                        <div class="documentation-box"><a href="documentation.php">DOCUMENTATION</a></div>
+                        <div class="projects-box"><a href="projects.php">PROJECTS</a></div>
                     </div>
             </div>
             <h1 class="my-skills-header">MY SKILLS</h1>

@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['username'])) {
+    header("Location: log_in.php");
+    exit;
+}
+
+$isAdmin = isset($_SESSION['role_id']) && $_SESSION['role_id'] == 1;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,20 +32,23 @@
             </button>
 
             <div class="year-content">
-                <div class="admin-upload-panel">
-                    <div class="upload-panel-text">
+                <?php
+                if ($isAdmin) {
+                    echo "<div class='admin-upload-panel'>
+                    <div class='upload-panel-text'>
                         <h4>Add Project File</h4>
                         <p>Select a file and then use your own backend later to save it.</p>
                     </div>
 
-                    <div class="upload-panel-actions">
-                        <input type="file" id="file-upload-year1" class="file-input-hidden">
-                        <button type="button" class="file-select-btn" data-target="file-upload-year1">Choose File</button>
-                        <span class="selected-file-name">No file selected</span>
-                        <button type="button" class="file-add-btn">Add Project</button>
+                    <div class='upload-panel-actions'>
+                        <input type='file' id='file-upload-year1' class='file-input-hidden'>
+                        <button type='button' class='file-select-btn' data-target='file-upload-year1'>Choose File</button>
+                        <span class='selected-file-name'>No file selected</span>
+                        <button type='button' class='file-add-btn'>Add Project</button>
                     </div>
-                </div>
-
+                </div>";
+                }
+                ?>
                 <div class="project-list">
 
                     <article class="project-card">
@@ -120,20 +133,23 @@
             </button>
 
             <div class="year-content">
-                <div class="admin-upload-panel">
-                    <div class="upload-panel-text">
+                <?php
+                if ($isAdmin) {
+                    echo "<div class='admin-upload-panel'>
+                    <div class='upload-panel-text'>
                         <h4>Add Project File</h4>
                         <p>Select a file and then use your own backend later to save it.</p>
                     </div>
 
-                    <div class="upload-panel-actions">
-                        <input type="file" id="file-upload-2025" class="file-input-hidden">
-                        <button type="button" class="file-select-btn" data-target="file-upload-2025">Choose File</button>
-                        <span class="selected-file-name">No file selected</span>
-                        <button type="button" class="file-add-btn">Add Project</button>
+                    <div class='upload-panel-actions'>
+                        <input type='file' id='file-upload-year2' class='file-input-hidden'>
+                        <button type='button' class='file-select-btn' data-target='file-upload-year2'>Choose File</button>
+                        <span class='selected-file-name'>No file selected</span>
+                        <button type='button' class='file-add-btn'>Add Project</button>
                     </div>
-                </div>
-
+                </div>";
+                }
+                ?>
                 <div class="project-list">
                     <article class="project-card">
                         <div class="project-card-left">
@@ -163,20 +179,23 @@
             </button>
 
             <div class="year-content">
-                <div class="admin-upload-panel">
-                    <div class="upload-panel-text">
+                <?php
+                if ($isAdmin) {
+                    echo "<div class='admin-upload-panel'>
+                    <div class='upload-panel-text'>
                         <h4>Add Project File</h4>
                         <p>Select a file and then use your own backend later to save it.</p>
                     </div>
 
-                    <div class="upload-panel-actions">
-                        <input type="file" id="file-upload-2024" class="file-input-hidden">
-                        <button type="button" class="file-select-btn" data-target="file-upload-2024">Choose File</button>
-                        <span class="selected-file-name">No file selected</span>
-                        <button type="button" class="file-add-btn">Add Project</button>
+                    <div class='upload-panel-actions'>
+                        <input type='file' id='file-upload-year3' class='file-input-hidden'>
+                        <button type='button' class='file-select-btn' data-target='file-upload-year3'>Choose File</button>
+                        <span class='selected-file-name'>No file selected</span>
+                        <button type='button' class='file-add-btn'>Add Project</button>
                     </div>
-                </div>
-
+                </div>";
+                }
+                ?>
                 <div class="project-list">
                     <article class="project-card">
                         <div class="project-card-left">
@@ -206,20 +225,23 @@
             </button>
 
             <div class="year-content">
-                <div class="admin-upload-panel">
-                    <div class="upload-panel-text">
+                <?php
+                if ($isAdmin) {
+                    echo "<div class='admin-upload-panel'>
+                    <div class='upload-panel-text'>
                         <h4>Add Project File</h4>
                         <p>Select a file and then use your own backend later to save it.</p>
                     </div>
 
-                    <div class="upload-panel-actions">
-                        <input type="file" id="file-upload-2023" class="file-input-hidden">
-                        <button type="button" class="file-select-btn" data-target="file-upload-2023">Choose File</button>
-                        <span class="selected-file-name">No file selected</span>
-                        <button type="button" class="file-add-btn">Add Project</button>
+                    <div class='upload-panel-actions'>
+                        <input type='file' id='file-upload-year4' class='file-input-hidden'>
+                        <button type='button' class='file-select-btn' data-target='file-upload-year4'>Choose File</button>
+                        <span class='selected-file-name'>No file selected</span>
+                        <button type='button' class='file-add-btn'>Add Project</button>
                     </div>
-                </div>
-
+                </div>";
+                }
+                ?>
                 <div class="project-list">
                     <article class="project-card">
                         <div class="project-card-left">
