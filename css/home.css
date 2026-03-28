@@ -24,7 +24,7 @@ body
     margin: 0;
 }
 
-header
+/* header
 {
     display: flex;
     justify-content: space-between;
@@ -58,7 +58,7 @@ header a
     color: #514460;
     box-shadow: 0 0px 0px rgba(0,0,0,0);
     padding: 0;
-}
+} */
 
 .hero
 {

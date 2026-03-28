@@ -14,10 +14,13 @@ $isAdmin = isset($_SESSION['role_id']) && $_SESSION['role_id'] == 1;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/projects.css">
+    <link rel="stylesheet" href="components/header.css">
     <title>Projects</title>
 </head>
 <body>
-    <h1 class="title">Projects</h1>
+    <?php include("components/header.php") ?>
+    <main>
+<h1 class="title">Projects</h1>
     <h3 class="subtitle">Explore my journey through innovation and design</h3>
 
     <section class="projects">
@@ -262,7 +265,7 @@ $isAdmin = isset($_SESSION['role_id']) && $_SESSION['role_id'] == 1;
         </article>
 
     </section>
-
-    <script src="js/projects.js"></script>
+    </main>
+        <script src="js/projects.js"></script>
 </body>
 </html>

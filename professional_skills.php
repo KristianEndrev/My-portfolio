@@ -15,8 +15,10 @@ $isAdmin = isset($_SESSION['role_id']) && $_SESSION['role_id'] == 1;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional Skills</title>
     <link rel="stylesheet" href="css/professional-skills.css">
+    <link rel="stylesheet" href="components/header.css">
 </head>
 <body>
+    <?php include("components/header.php") ?>
     <main class="skills-page">
         <section class="skills-hero">
             <h1 class="skills-title">Professional Skills</h1>

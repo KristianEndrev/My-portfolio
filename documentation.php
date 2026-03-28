@@ -15,8 +15,10 @@ $isAdmin = isset($_SESSION['role_id']) && $_SESSION['role_id'] == 1;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Documentation</title>
     <link rel="stylesheet" href="css/documentation.css">
+    <link rel="stylesheet" href="components/header.css">
 </head>
 <body>
+    <?php include 'components/header.php' ?>
     <main class="documentation-page">
         <section class="documentation-layout">
             <aside class="documentation-sidebar">
