@@ -10,7 +10,7 @@
             }
             ?>
             <li><a href="projects.php">PROJECTS</a></li>
-            <li><a href="professional_skills.php">PROFESSIONAL SKILLS</a></li>
+            <li><a href="professional-skills.php">PROFESSIONAL SKILLS</a></li>
             <li><a href="documentation.php">DOCUMENTATION</a></li>
             <li><a href="">ABOUT ME</a></li>
             <li><a href="">GET IN TOUCH</a></li>

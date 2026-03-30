@@ -63,7 +63,7 @@ $isAdmin = isset($_SESSION['role_id']) && $_SESSION['role_id'] == 1;
                         skills, along with a structured approach to planning, documentation, 
                         and reflection - ready to contribute effectively to any IT project.</p>
                 </div>
-                        <div class="professional-skills-box"><a href="professional_skills.php">PROFESSIONAL SKILLS</a></div>
+                        <div class="professional-skills-box"><a href="professional-skills.php">PROFESSIONAL SKILLS</a></div>
                     <div class="skills-boxes">
                         <div class="documentation-box"><a href="documentation.php">DOCUMENTATION</a></div>
                         <div class="projects-box"><a href="projects.php">PROJECTS</a></div>

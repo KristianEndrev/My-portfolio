@@ -2,11 +2,11 @@ const categoryCards = document.querySelectorAll('.skill-category-card');
 const detailsTitle = document.getElementById('detailsTitle');
 const detailsSubtitle = document.getElementById('detailsSubtitle');
 const detailsSection = document.getElementById('skillsDetails');
-const documentsGrid = document.getElementById('skillsDocumentsGrid');
 const helperText = document.getElementById('skillsHelperText');
 const detailsIcon = document.getElementById('detailsIconHolder');
 const movingActiveDot = document.getElementById('movingActiveDot');
 const categoriesWrapper = document.getElementById('skillsCategories');
+const categoryContentSections = document.querySelectorAll('.skills-category-content');
 
 const icons = {
     minutes: `
@@ -50,224 +50,6 @@ const icons = {
     `
 };
 
-const categoryData = {
-    minutes: {
-        title: 'Minutes of Meeting',
-        subtitle: 'Browse and access your documents',
-        documents: [
-            {
-                title: 'Q4 Strategy Planning Meeting',
-                date: 'Dec 15, 2025',
-                period: 'Period 4',
-                description: 'Comprehensive notes from quarterly strategy session covering business objectives, resource allocation, and key performance indicators for the upcoming quarter.'
-            },
-            {
-                title: 'Product Development Sync',
-                date: 'Nov 28, 2025',
-                period: 'Period 3',
-                description: 'Weekly sync meeting notes discussing feature roadmap, technical challenges, sprint planning, and cross-team collaboration initiatives.'
-            },
-            {
-                title: 'Client Feedback Session',
-                date: 'Oct 10, 2025',
-                period: 'Period 2',
-                description: 'Detailed documentation of client feedback meeting including pain points, feature requests, and action items for immediate implementation.'
-            },
-            {
-                title: 'Annual Review Meeting',
-                date: 'Jan 20, 2025',
-                period: 'Period 1',
-                description: 'Annual performance review meeting notes covering achievements, growth areas, and professional development goals for the year.'
-            }
-        ]
-    },
-    reflection: {
-        title: 'Reflection Reports',
-        subtitle: 'Review personal learning and development',
-        documents: [
-            {
-                title: 'Semester Growth Reflection',
-                date: 'Dec 18, 2025',
-                period: 'Period 4',
-                description: 'Reflection on key technical growth, project ownership, and collaboration improvements achieved during the semester.'
-            },
-            {
-                title: 'Teamwork Reflection',
-                date: 'Nov 05, 2025',
-                period: 'Period 3',
-                description: 'A report focused on communication, teamwork challenges, and lessons learned from working in project groups.'
-            },
-            {
-                title: 'Presentation Skills Reflection',
-                date: 'Oct 01, 2025',
-                period: 'Period 2',
-                description: 'Evaluation of presentation confidence, structure, delivery, and audience engagement during class demos.'
-            },
-            {
-                title: 'Professional Behaviour Reflection',
-                date: 'Feb 14, 2025',
-                period: 'Period 1',
-                description: 'Reflection about planning, responsibility, and building stronger professional habits in academic projects.'
-            }
-        ]
-    },
-    feedback: {
-        title: 'Feedback & Reviews',
-        subtitle: 'Read received feedback and evaluation notes',
-        documents: [
-            {
-                title: 'Peer Review Summary',
-                date: 'Dec 12, 2025',
-                period: 'Period 4',
-                description: 'Collected feedback from peers about communication, contribution, and technical execution within the project team.'
-            },
-            {
-                title: 'Teacher Feedback Report',
-                date: 'Nov 02, 2025',
-                period: 'Period 3',
-                description: 'Review notes from mentor sessions highlighting strengths, weaknesses, and suggested areas of development.'
-            },
-            {
-                title: 'Prototype Review Notes',
-                date: 'Sep 26, 2025',
-                period: 'Period 2',
-                description: 'Usability and design feedback based on early prototype testing and stakeholder observations.'
-            },
-            {
-                title: 'Client Evaluation Notes',
-                date: 'Jan 16, 2025',
-                period: 'Period 1',
-                description: 'Summary of evaluation points provided after the first project milestone presentation.'
-            }
-        ]
-    },
-    presentations: {
-        title: 'Presentations',
-        subtitle: 'Open and review your presentation materials',
-        documents: [
-            {
-                title: 'Portfolio Presentation',
-                date: 'Dec 21, 2025',
-                period: 'Period 4',
-                description: 'Presentation slides showing portfolio structure, technical work, and design decisions.'
-            },
-            {
-                title: 'Project Demo Slides',
-                date: 'Nov 09, 2025',
-                period: 'Period 3',
-                description: 'Slides for demonstrating system functionality, development process, and outcomes.'
-            },
-            {
-                title: 'Research Findings Deck',
-                date: 'Oct 03, 2025',
-                period: 'Period 2',
-                description: 'Visual summary of research findings, trends, and recommendations.'
-            },
-            {
-                title: 'Kickoff Presentation',
-                date: 'Feb 01, 2025',
-                period: 'Period 1',
-                description: 'Opening presentation explaining project scope, team roles, and expected deliverables.'
-            }
-        ]
-    },
-    training: {
-        title: 'Training & Workshops',
-        subtitle: 'Access workshop records and training files',
-        documents: [
-            {
-                title: 'Design Thinking Workshop',
-                date: 'Dec 04, 2025',
-                period: 'Period 4',
-                description: 'Workshop materials and notes focused on ideation, problem framing, and iterative design.'
-            },
-            {
-                title: 'Agile Training Notes',
-                date: 'Nov 14, 2025',
-                period: 'Period 3',
-                description: 'Materials covering sprint planning, backlog prioritization, standups, and agile delivery.'
-            },
-            {
-                title: 'Git Collaboration Workshop',
-                date: 'Sep 20, 2025',
-                period: 'Period 2',
-                description: 'Training content about branching strategies, pull requests, and safe collaboration workflows.'
-            },
-            {
-                title: 'Communication Skills Session',
-                date: 'Jan 29, 2025',
-                period: 'Period 1',
-                description: 'Notes and resources from a workshop on professional communication and meeting etiquette.'
-            }
-        ]
-    },
-    certifications: {
-        title: 'Certifications',
-        subtitle: 'Browse earned certificates and achievements',
-        documents: [
-            {
-                title: 'Frontend Development Certificate',
-                date: 'Dec 22, 2025',
-                period: 'Period 4',
-                description: 'Certificate of completion for advanced frontend development and responsive interface design.'
-            },
-            {
-                title: 'Project Management Basics',
-                date: 'Nov 11, 2025',
-                period: 'Period 3',
-                description: 'Achievement document for completing introductory project planning and coordination training.'
-            },
-            {
-                title: 'UI/UX Fundamentals',
-                date: 'Oct 06, 2025',
-                period: 'Period 2',
-                description: 'Certificate covering visual hierarchy, accessibility, wireframing, and usability principles.'
-            },
-            {
-                title: 'Professional Communication',
-                date: 'Feb 07, 2025',
-                period: 'Period 1',
-                description: 'Credential recognizing successful completion of a communication and presentation skills course.'
-            }
-        ]
-    }
-};
-
-function createDocumentCard(document, index) {
-    return `
-        <article class="skill-document-card" style="animation-delay:${0.05 + index * 0.07}s;">
-            <h3 class="document-title">${document.title}</h3>
-
-            <div class="document-meta">
-                <span class="document-date">${document.date}</span>
-                <span class="document-period">${document.period}</span>
-            </div>
-
-            <p class="document-description">${document.description}</p>
-
-            <div class="document-actions">
-                <a href="#" class="document-view-btn">
-                    <svg class="view-svg-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M14 3H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9z"></path>
-                        <path d="M14 3v6h6"></path>
-                        <path d="M10 13h4"></path>
-                        <path d="M10 17h4"></path>
-                    </svg>
-                    <span>View</span>
-                </a>
-
-                <a href="#" class="document-download-btn" aria-label="Download document">
-                    <svg class="download-svg-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M12 4v10"></path>
-                        <path d="m8 10 4 4 4-4"></path>
-                        <path d="M5 20h14"></path>
-                    </svg>
-                </a>
-            </div>
-        </article>
-    `;
-}
-
 function moveActiveDot(targetCard) {
     if (!targetCard || !movingActiveDot || !categoriesWrapper) return;
 
@@ -295,11 +77,7 @@ function rotateIconBox(card, direction = 'forward') {
     resetIconBox(iconBox);
 
     requestAnimationFrame(() => {
-        if (direction === 'forward') {
-            iconBox.style.transform = 'rotate(360deg)';
-        } else {
-            iconBox.style.transform = 'rotate(-360deg)';
-        }
+        iconBox.style.transform = direction === 'forward' ? 'rotate(360deg)' : 'rotate(-360deg)';
     });
 
     setTimeout(() => {
@@ -307,29 +85,34 @@ function rotateIconBox(card, direction = 'forward') {
     }, 470);
 }
 
-function updateCategory(categoryKey) {
-    const category = categoryData[categoryKey];
-    if (!category) return;
-
-    detailsTitle.textContent = category.title;
-    detailsSubtitle.textContent = category.subtitle;
-    detailsIcon.innerHTML = icons[categoryKey];
-
-    documentsGrid.innerHTML = category.documents
-        .map((document, index) => createDocumentCard(document, index))
-        .join('');
+function hideAllCategoryContent() {
+    categoryContentSections.forEach((section) => {
+        section.classList.remove('active');
+    });
 }
 
 function openCategory(card) {
     const categoryKey = card.dataset.category;
+    const categoryTitle = card.dataset.title;
+    const categorySubtitle = card.dataset.subtitle;
+    const targetSection = document.getElementById(`category-${categoryKey}`);
 
     categoryCards.forEach((item) => {
         item.classList.remove('active');
     });
 
+    hideAllCategoryContent();
+
     card.classList.add('active');
 
-    updateCategory(categoryKey);
+    if (targetSection) {
+        targetSection.classList.add('active');
+    }
+
+    detailsTitle.textContent = categoryTitle;
+    detailsSubtitle.textContent = categorySubtitle;
+    detailsIcon.innerHTML = icons[categoryKey];
+
     helperText.classList.add('hidden');
     detailsSection.classList.add('visible');
 
@@ -337,6 +120,11 @@ function openCategory(card) {
         moveActiveDot(card);
         rotateIconBox(card, 'forward');
     });
+
+    const modalCategoryInput = document.getElementById('modalSkillCategory');
+    if (modalCategoryInput) {
+        modalCategoryInput.value = categoryKey;
+    }
 }
 
 function closeCategory(card) {
@@ -344,6 +132,7 @@ function closeCategory(card) {
     detailsSection.classList.remove('visible');
     helperText.classList.remove('hidden');
     movingActiveDot.style.opacity = '0';
+    hideAllCategoryContent();
 
     rotateIconBox(card, 'backward');
 }
@@ -367,17 +156,6 @@ window.addEventListener('resize', () => {
     }
 });
 
-const defaultActiveCard = document.querySelector('.skill-category-card.active');
-
-if (defaultActiveCard) {
-    updateCategory(defaultActiveCard.dataset.category);
-
-    requestAnimationFrame(() => {
-        moveActiveDot(defaultActiveCard);
-        movingActiveDot.style.opacity = '1';
-    });
-}
-
 const fileSelectButtons = document.querySelectorAll('.file-select-btn');
 
 fileSelectButtons.forEach((button) => {
@@ -396,7 +174,10 @@ const hiddenFileInputs = document.querySelectorAll('.file-input-hidden');
 hiddenFileInputs.forEach((input) => {
     input.addEventListener('change', () => {
         const panelActions = input.closest('.upload-panel-actions');
+        if (!panelActions) return;
+
         const fileNameText = panelActions.querySelector('.selected-file-name');
+        if (!fileNameText) return;
 
         if (input.files.length > 0) {
             fileNameText.textContent = input.files[0].name;
@@ -404,4 +185,130 @@ hiddenFileInputs.forEach((input) => {
             fileNameText.textContent = 'No file selected';
         }
     });
+});
+
+const skillModalOverlay = document.getElementById('skillModalOverlay');
+const skillModalClose = document.getElementById('skillModalClose');
+const openSkillModalBtn = document.querySelector('.open-skill-modal-btn');
+
+if (openSkillModalBtn) {
+    openSkillModalBtn.addEventListener('click', () => {
+        const activeCard = document.querySelector('.skill-category-card.active');
+
+        if (!activeCard) {
+            alert('Please select a category first.');
+            return;
+        }
+
+        const modalCategoryInput = document.getElementById('modalSkillCategory');
+        if (modalCategoryInput) {
+            modalCategoryInput.value = activeCard.dataset.category;
+        }
+
+        if (skillModalOverlay) {
+            skillModalOverlay.classList.add('active');
+        }
+    });
+}
+
+if (skillModalClose) {
+    skillModalClose.addEventListener('click', () => {
+        if (skillModalOverlay) {
+            skillModalOverlay.classList.remove('active');
+        }
+    });
+}
+
+if (skillModalOverlay) {
+    skillModalOverlay.addEventListener('click', (event) => {
+        if (event.target === skillModalOverlay) {
+            skillModalOverlay.classList.remove('active');
+        }
+    });
+}
+
+const viewerOverlay = document.getElementById('fileViewerOverlay');
+const viewerCloseBtn = document.getElementById('fileViewerClose');
+const viewerTitle = document.getElementById('fileViewerTitle');
+const viewerBody = document.getElementById('fileViewerBody');
+const openViewerButtons = document.querySelectorAll('.open-viewer-btn');
+
+openViewerButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+        const file = button.getAttribute('data-file');
+        const title = button.getAttribute('data-title');
+        const extension = button.getAttribute('data-extension');
+
+        if (!viewerOverlay || !viewerTitle || !viewerBody) {
+            return;
+        }
+
+        viewerTitle.textContent = title;
+        viewerBody.innerHTML = '';
+
+        if (['jpg', 'jpeg', 'png'].includes(extension)) {
+            viewerBody.innerHTML = `
+                <div class="file-viewer-image-wrap">
+                    <img src="${file}" alt="${title}" class="file-viewer-image">
+                </div>
+            `;
+        } else if (extension === 'pdf') {
+            viewerBody.innerHTML = `
+                <iframe src="${file}" class="file-viewer-frame"></iframe>
+            `;
+        } else if (['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'].includes(extension)) {
+            viewerBody.innerHTML = `
+                <div class="file-viewer-fallback">
+                    <h3>Preview unavailable</h3>
+                    <p>Office files cannot be previewed reliably in your current localhost setup, but you can still open or download the file.</p>
+                    <div class="file-viewer-actions">
+                        <a href="${file}" target="_blank" class="document-view-btn">Open File</a>
+                        <a href="${file}" download class="document-download-btn">Download</a>
+                    </div>
+                </div>
+            `;
+        } else {
+            viewerBody.innerHTML = `
+                <div class="file-viewer-fallback">
+                    <h3>Preview unavailable</h3>
+                    <p>This file type cannot be previewed directly inside the page.</p>
+                    <div class="file-viewer-actions">
+                        <a href="${file}" target="_blank" class="document-view-btn">Open File</a>
+                        <a href="${file}" download class="document-download-btn">Download</a>
+                    </div>
+                </div>
+            `;
+        }
+
+        viewerOverlay.classList.add('active');
+    });
+});
+
+if (viewerCloseBtn) {
+    viewerCloseBtn.addEventListener('click', () => {
+        viewerOverlay.classList.remove('active');
+        viewerBody.innerHTML = '';
+    });
+}
+
+if (viewerOverlay) {
+    viewerOverlay.addEventListener('click', (event) => {
+        if (event.target === viewerOverlay) {
+            viewerOverlay.classList.remove('active');
+            viewerBody.innerHTML = '';
+        }
+    });
+}
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+        if (skillModalOverlay && skillModalOverlay.classList.contains('active')) {
+            skillModalOverlay.classList.remove('active');
+        }
+
+        if (viewerOverlay && viewerOverlay.classList.contains('active')) {
+            viewerOverlay.classList.remove('active');
+            viewerBody.innerHTML = '';
+        }
+    }
 });
