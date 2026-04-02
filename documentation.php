@@ -84,11 +84,54 @@ if ($isAdmin && $_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["add_docum
                     header("Location: documentation.php");
                     exit;
                 } catch (PDOException $e) {
+                    if (file_exists($filePath)) {
+                        unlink($filePath);
+                    }
                     $msgs[] = "Database error while saving the file.";
                 }
             } else {
                 $msgs[] = "Failed to upload the file.";
             }
+        }
+    }
+}
+
+if ($isAdmin && $_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_documentation_file_submit"])) {
+    $fileId = (int)($_POST["documentation_file_id"] ?? 0);
+
+    if ($fileId <= 0) {
+        $msgs[] = "Invalid file selected for deletion.";
+    } else {
+        try {
+            $stmt = $dbHandler->prepare("
+                SELECT id, file_path
+                FROM documentation_files
+                WHERE id = :id
+                LIMIT 1
+            ");
+            $stmt->execute([":id" => $fileId]);
+            $fileToDelete = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$fileToDelete) {
+                $msgs[] = "File not found.";
+            } else {
+                $filePath = $fileToDelete["file_path"];
+
+                if (!empty($filePath) && str_starts_with($filePath, 'uploads/documentation/') && file_exists($filePath)) {
+                    unlink($filePath);
+                }
+
+                $deleteStmt = $dbHandler->prepare("
+                    DELETE FROM documentation_files
+                    WHERE id = :id
+                ");
+                $deleteStmt->execute([":id" => $fileId]);
+
+                header("Location: documentation.php");
+                exit;
+            }
+        } catch (PDOException $e) {
+            $msgs[] = "Failed to delete the file.";
         }
     }
 }
@@ -126,7 +169,7 @@ function formatFileSize($bytes) {
     return number_format($bytes / 1024, 0) . " KB";
 }
 
-function renderDocumentationCards($documents) {
+function renderDocumentationCards($documents, $isAdmin) {
     if (count($documents) === 0) {
         echo "
             <div class='documentation-empty-state'>
@@ -189,7 +232,19 @@ function renderDocumentationCards($documents) {
                             <path d='M5 20h14'></path>
                         </svg>
                         <span>Download</span>
-                    </a>
+                    </a>";
+
+        if ($isAdmin) {
+            echo "
+                    <form action='' method='POST' class='documentation-delete-form' onsubmit=\"return confirm('Delete this file?');\">
+                        <input type='hidden' name='documentation_file_id' value='" . (int)$document["id"] . "'>
+                        <input type='hidden' name='delete_documentation_file_submit' value='1'>
+                        <button type='submit' class='documentation-action-btn delete-btn'>Delete</button>
+                    </form>
+            ";
+        }
+
+        echo "
                 </div>
             </article>
         ";
@@ -293,41 +348,12 @@ function renderDocumentationCards($documents) {
                     </div>
                 <?php endif; ?>
 
-                <div class="documentation-category-section active" id="category-project-plans">
-                    <div class="documentation-cards">
-                        <?php renderDocumentationCards($documentationByCategory['project-plans']); ?>
-                    </div>
-                </div>
-
-                <div class="documentation-category-section" id="category-network-diagrams">
-                    <div class="documentation-cards">
-                        <?php renderDocumentationCards($documentationByCategory['network-diagrams']); ?>
-                    </div>
-                </div>
-
-                <div class="documentation-category-section" id="category-functional-design">
-                    <div class="documentation-cards">
-                        <?php renderDocumentationCards($documentationByCategory['functional-design']); ?>
-                    </div>
-                </div>
-
-                <div class="documentation-category-section" id="category-requirements-analysis">
-                    <div class="documentation-cards">
-                        <?php renderDocumentationCards($documentationByCategory['requirements-analysis']); ?>
-                    </div>
-                </div>
-
-                <div class="documentation-category-section" id="category-technical-design">
-                    <div class="documentation-cards">
-                        <?php renderDocumentationCards($documentationByCategory['technical-design']); ?>
-                    </div>
-                </div>
-
-                <div class="documentation-category-section" id="category-charts-period-plans">
-                    <div class="documentation-cards">
-                        <?php renderDocumentationCards($documentationByCategory['charts-period-plans']); ?>
-                    </div>
-                </div>
+                <div class="documentation-category-section active" id="category-project-plans"><div class="documentation-cards"><?php renderDocumentationCards($documentationByCategory['project-plans'], $isAdmin); ?></div></div>
+                <div class="documentation-category-section" id="category-network-diagrams"><div class="documentation-cards"><?php renderDocumentationCards($documentationByCategory['network-diagrams'], $isAdmin); ?></div></div>
+                <div class="documentation-category-section" id="category-functional-design"><div class="documentation-cards"><?php renderDocumentationCards($documentationByCategory['functional-design'], $isAdmin); ?></div></div>
+                <div class="documentation-category-section" id="category-requirements-analysis"><div class="documentation-cards"><?php renderDocumentationCards($documentationByCategory['requirements-analysis'], $isAdmin); ?></div></div>
+                <div class="documentation-category-section" id="category-technical-design"><div class="documentation-cards"><?php renderDocumentationCards($documentationByCategory['technical-design'], $isAdmin); ?></div></div>
+                <div class="documentation-category-section" id="category-charts-period-plans"><div class="documentation-cards"><?php renderDocumentationCards($documentationByCategory['charts-period-plans'], $isAdmin); ?></div></div>
             </section>
         </section>
     </main>
@@ -368,12 +394,10 @@ function renderDocumentationCards($documents) {
     <div class="file-viewer-overlay" id="fileViewerOverlay">
         <div class="file-viewer-modal">
             <button type="button" class="file-viewer-close" id="fileViewerClose">&times;</button>
-
             <div class="file-viewer-header">
                 <h2 class="file-viewer-title" id="fileViewerTitle">Document Viewer</h2>
                 <p class="file-viewer-subtitle">Preview your uploaded file without leaving the page.</p>
             </div>
-
             <div class="file-viewer-body" id="fileViewerBody"></div>
         </div>
     </div>

@@ -1,46 +1,55 @@
-const yearBoxes = document.querySelectorAll('.year-box');
+const projectModalOverlay = document.getElementById('projectModalOverlay');
+const projectModalClose = document.getElementById('projectModalClose');
+const openProjectModalButtons = document.querySelectorAll('.open-project-modal-btn');
+const projectYearSelect = document.getElementById('projectYearSelect');
 
-function closeAllYearBoxes() {
-    yearBoxes.forEach((box) => {
-        const header = box.querySelector('.year-header');
-        const content = box.querySelector('.year-content');
+openProjectModalButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+        const year = button.getAttribute('data-year');
 
-        box.classList.remove('active');
-        header.setAttribute('aria-expanded', 'false');
-        content.style.height = '0px';
+        if (projectYearSelect && year) {
+            projectYearSelect.value = year;
+        }
+
+        if (projectModalOverlay) {
+            projectModalOverlay.classList.add('active');
+        }
+    });
+});
+
+if (projectModalClose) {
+    projectModalClose.addEventListener('click', () => {
+        if (projectModalOverlay) {
+            projectModalOverlay.classList.remove('active');
+        }
     });
 }
 
-function openYearBox(box) {
-    const header = box.querySelector('.year-header');
-    const content = box.querySelector('.year-content');
-
-    box.classList.add('active');
-    header.setAttribute('aria-expanded', 'true');
-    content.style.height = content.scrollHeight + 'px';
+if (projectModalOverlay) {
+    projectModalOverlay.addEventListener('click', (event) => {
+        if (event.target === projectModalOverlay) {
+            projectModalOverlay.classList.remove('active');
+        }
+    });
 }
 
-yearBoxes.forEach((box, index) => {
-    const header = box.querySelector('.year-header');
-    const content = box.querySelector('.year-content');
-
-    if (index === 0) {
-        box.classList.add('active');
-        content.style.height = content.scrollHeight + 'px';
-        header.setAttribute('aria-expanded', 'true');
-    } else {
-        box.classList.remove('active');
-        content.style.height = '0px';
-        header.setAttribute('aria-expanded', 'false');
-    }
-
+document.querySelectorAll('.year-header').forEach((header) => {
     header.addEventListener('click', () => {
-        const isActive = box.classList.contains('active');
+        const yearBox = header.closest('.year-box');
+        const content = yearBox.querySelector('.year-content');
+        const isActive = yearBox.classList.contains('active');
 
-        closeAllYearBoxes();
+        document.querySelectorAll('.year-box').forEach((box) => {
+            box.classList.remove('active');
+            const boxContent = box.querySelector('.year-content');
+            if (boxContent) {
+                boxContent.style.height = '0px';
+            }
+        });
 
-        if (!isActive) {
-            openYearBox(box);
+        if (!isActive && content) {
+            yearBox.classList.add('active');
+            content.style.height = content.scrollHeight + 'px';
         }
     });
 });
@@ -63,16 +72,10 @@ const hiddenFileInputs = document.querySelectorAll('.file-input-hidden');
 hiddenFileInputs.forEach((input) => {
     input.addEventListener('change', () => {
         const panelActions = input.closest('.upload-panel-actions');
-
-        if (!panelActions) {
-            return;
-        }
+        if (!panelActions) return;
 
         const fileNameText = panelActions.querySelector('.selected-file-name');
-
-        if (!fileNameText) {
-            return;
-        }
+        if (!fileNameText) return;
 
         if (input.files.length > 0) {
             fileNameText.textContent = input.files[0].name;
@@ -82,58 +85,11 @@ hiddenFileInputs.forEach((input) => {
     });
 });
 
-const modalOverlay = document.getElementById('projectModalOverlay');
-const modalCloseBtn = document.getElementById('projectModalClose');
-const modalYearInput = document.getElementById('modalYearNumber');
-const openModalButtons = document.querySelectorAll('.open-project-modal-btn');
-
-openModalButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-        const year = button.getAttribute('data-year');
-
-        if (modalYearInput) {
-            modalYearInput.value = year;
-        }
-
-        if (modalOverlay) {
-            modalOverlay.classList.add('active');
-        }
-    });
-});
-
-if (modalCloseBtn) {
-    modalCloseBtn.addEventListener('click', () => {
-        if (modalOverlay) {
-            modalOverlay.classList.remove('active');
-        }
-    });
-}
-
-if (modalOverlay) {
-    modalOverlay.addEventListener('click', (event) => {
-        if (event.target === modalOverlay) {
-            modalOverlay.classList.remove('active');
-        }
-    });
-}
-
-document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && modalOverlay && modalOverlay.classList.contains('active')) {
-        modalOverlay.classList.remove('active');
-    }
-});
-
-window.addEventListener('resize', () => {
-    document.querySelectorAll('.year-box.active .year-content').forEach((content) => {
-        content.style.height = content.scrollHeight + 'px';
-    });
-});
-
-const viewerOverlay = document.getElementById('fileViewerOverlay');
-const viewerCloseBtn = document.getElementById('fileViewerClose');
-const viewerTitle = document.getElementById('fileViewerTitle');
-const viewerBody = document.getElementById('fileViewerBody');
-const openViewerButtons = document.querySelectorAll('.open-viewer-btn');
+const viewerOverlay = document.getElementById('projectFileViewerOverlay');
+const viewerCloseBtn = document.getElementById('projectFileViewerClose');
+const viewerTitle = document.getElementById('projectFileViewerTitle');
+const viewerBody = document.getElementById('projectFileViewerBody');
+const openViewerButtons = document.querySelectorAll('.open-project-viewer-btn');
 
 openViewerButtons.forEach((button) => {
     button.addEventListener('click', () => {
@@ -202,14 +158,24 @@ if (viewerOverlay) {
     viewerOverlay.addEventListener('click', (event) => {
         if (event.target === viewerOverlay) {
             viewerOverlay.classList.remove('active');
-            viewerBody.innerHTML = '';
+            if (viewerBody) {
+                viewerBody.innerHTML = '';
+            }
         }
     });
 }
 
 document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && viewerOverlay && viewerOverlay.classList.contains('active')) {
-        viewerOverlay.classList.remove('active');
-        viewerBody.innerHTML = '';
+    if (event.key === 'Escape') {
+        if (projectModalOverlay && projectModalOverlay.classList.contains('active')) {
+            projectModalOverlay.classList.remove('active');
+        }
+
+        if (viewerOverlay && viewerOverlay.classList.contains('active')) {
+            viewerOverlay.classList.remove('active');
+            if (viewerBody) {
+                viewerBody.innerHTML = '';
+            }
+        }
     }
 });

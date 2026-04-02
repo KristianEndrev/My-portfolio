@@ -24,42 +24,6 @@ body
     margin: 0;
 }
 
-/* header
-{
-    display: flex;
-    justify-content: space-between;
-    font-family: "passion-one-regular";
-    font-size: 23px;
-    padding: 2vw;
-}
-
-.nav-buttons ul
-{
-    display: flex;
-    justify-content: space-between;
-    list-style: none;
-    gap: 2vw;
-    margin: 0;
-}
-
-header a
-{
-    text-decoration: none;
-    color: black;
-    padding-block: 1vh;
-    padding-inline: 1.5vw;
-    background-color: #514460;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.35);
-}
-
-.log-out
-{
-    background-color: #19232F;
-    color: #514460;
-    box-shadow: 0 0px 0px rgba(0,0,0,0);
-    padding: 0;
-} */
-
 .hero
 {
     padding: 2vw;

@@ -75,11 +75,54 @@ if ($isAdmin && $_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["add_skill
                     header("Location: professional-skills.php");
                     exit;
                 } catch (PDOException $e) {
+                    if (file_exists($filePath)) {
+                        unlink($filePath);
+                    }
                     $msgs[] = "Database error while saving the file.";
                 }
             } else {
                 $msgs[] = "Failed to upload the file.";
             }
+        }
+    }
+}
+
+if ($isAdmin && $_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete_skill_file_submit"])) {
+    $fileId = (int)($_POST["skill_file_id"] ?? 0);
+
+    if ($fileId <= 0) {
+        $msgs[] = "Invalid file selected for deletion.";
+    } else {
+        try {
+            $stmt = $dbHandler->prepare("
+                SELECT id, file_path
+                FROM professional_skills_files
+                WHERE id = :id
+                LIMIT 1
+            ");
+            $stmt->execute([":id" => $fileId]);
+            $fileToDelete = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$fileToDelete) {
+                $msgs[] = "File not found.";
+            } else {
+                $filePath = $fileToDelete["file_path"];
+
+                if (!empty($filePath) && str_starts_with($filePath, 'uploads/professional-skills/') && file_exists($filePath)) {
+                    unlink($filePath);
+                }
+
+                $deleteStmt = $dbHandler->prepare("
+                    DELETE FROM professional_skills_files
+                    WHERE id = :id
+                ");
+                $deleteStmt->execute([":id" => $fileId]);
+
+                header("Location: professional-skills.php");
+                exit;
+            }
+        } catch (PDOException $e) {
+            $msgs[] = "Failed to delete the file.";
         }
     }
 }
@@ -109,7 +152,7 @@ if ($dbHandler) {
     }
 }
 
-function renderSkillDocumentCards($documents) {
+function renderSkillDocumentCards($documents, $isAdmin) {
     if (count($documents) === 0) {
         echo "
             <div class='skills-empty-state'>
@@ -158,7 +201,19 @@ function renderSkillDocumentCards($documents) {
                             <path d='m8 10 4 4 4-4'></path>
                             <path d='M5 20h14'></path>
                         </svg>
-                    </a>
+                    </a>";
+
+        if ($isAdmin) {
+            echo "
+                    <form action='' method='POST' class='document-delete-form' onsubmit=\"return confirm('Delete this file?');\">
+                        <input type='hidden' name='skill_file_id' value='" . (int)$document["id"] . "'>
+                        <input type='hidden' name='delete_skill_file_submit' value='1'>
+                        <button type='submit' class='document-delete-btn'>Delete</button>
+                    </form>
+            ";
+        }
+
+        echo "
                 </div>
             </article>
         ";
@@ -194,70 +249,37 @@ function renderSkillDocumentCards($documents) {
 
         <section class="skills-categories" id="skillsCategories">
             <button class="skill-category-card" type="button" data-category="minutes" data-title="Minutes of Meeting" data-subtitle="Browse and access your documents">
-                <span class="skill-icon-box">
-                    <svg class="skill-svg-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M9 5H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"></path>
-                        <path d="M9 3h6v4H9z"></path>
-                        <path d="M9 12h6"></path>
-                        <path d="M9 16h4"></path>
-                    </svg>
-                </span>
+                <span class="skill-icon-box"><svg class="skill-svg-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"></path><path d="M9 3h6v4H9z"></path><path d="M9 12h6"></path><path d="M9 16h4"></path></svg></span>
                 <span class="skill-card-title">Minutes of Meeting</span>
                 <span class="skill-card-count"><?= count($categoryDocuments['minutes']) ?> documents</span>
             </button>
 
             <button class="skill-category-card" type="button" data-category="reflection" data-title="Reflection Reports" data-subtitle="Review personal learning and development">
-                <span class="skill-icon-box">
-                    <svg class="skill-svg-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M4 6.5A2.5 2.5 0 0 1 6.5 4H12v16H6.5A2.5 2.5 0 0 0 4 22z"></path>
-                        <path d="M20 6.5A2.5 2.5 0 0 0 17.5 4H12v16h5.5A2.5 2.5 0 0 1 20 22z"></path>
-                    </svg>
-                </span>
+                <span class="skill-icon-box"><svg class="skill-svg-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4H12v16H6.5A2.5 2.5 0 0 0 4 22z"></path><path d="M20 6.5A2.5 2.5 0 0 0 17.5 4H12v16h5.5A2.5 2.5 0 0 1 20 22z"></path></svg></span>
                 <span class="skill-card-title">Reflection Reports</span>
                 <span class="skill-card-count"><?= count($categoryDocuments['reflection']) ?> documents</span>
             </button>
 
             <button class="skill-category-card" type="button" data-category="feedback" data-title="Feedback & Reviews" data-subtitle="Read received feedback and evaluation notes">
-                <span class="skill-icon-box">
-                    <svg class="skill-svg-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                </span>
+                <span class="skill-icon-box"><svg class="skill-svg-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span>
                 <span class="skill-card-title">Feedback & Reviews</span>
                 <span class="skill-card-count"><?= count($categoryDocuments['feedback']) ?> documents</span>
             </button>
 
             <button class="skill-category-card" type="button" data-category="presentations" data-title="Presentations" data-subtitle="Open and review your presentation materials">
-                <span class="skill-icon-box">
-                    <svg class="skill-svg-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M8 6v12"></path>
-                        <path d="M12 10v8"></path>
-                        <path d="M16 4v14"></path>
-                    </svg>
-                </span>
+                <span class="skill-icon-box"><svg class="skill-svg-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 6v12"></path><path d="M12 10v8"></path><path d="M16 4v14"></path></svg></span>
                 <span class="skill-card-title">Presentations</span>
                 <span class="skill-card-count"><?= count($categoryDocuments['presentations']) ?> documents</span>
             </button>
 
             <button class="skill-category-card" type="button" data-category="training" data-title="Training & Workshops" data-subtitle="Access workshop records and training files">
-                <span class="skill-icon-box">
-                    <svg class="skill-svg-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M12 3 4 7l8 4 8-4-8-4z"></path>
-                        <path d="M4 12l8 4 8-4"></path>
-                        <path d="M4 17l8 4 8-4"></path>
-                    </svg>
-                </span>
+                <span class="skill-icon-box"><svg class="skill-svg-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 4 7l8 4 8-4-8-4z"></path><path d="M4 12l8 4 8-4"></path><path d="M4 17l8 4 8-4"></path></svg></span>
                 <span class="skill-card-title">Training & Workshops</span>
                 <span class="skill-card-count"><?= count($categoryDocuments['training']) ?> documents</span>
             </button>
 
             <button class="skill-category-card" type="button" data-category="certifications" data-title="Certifications" data-subtitle="Browse earned certificates and achievements">
-                <span class="skill-icon-box">
-                    <svg class="skill-svg-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <circle cx="12" cy="8" r="4"></circle>
-                        <path d="M10 12.5 8 21l4-2 4 2-2-8.5"></path>
-                    </svg>
-                </span>
+                <span class="skill-icon-box"><svg class="skill-svg-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M10 12.5 8 21l4-2 4 2-2-8.5"></path></svg></span>
                 <span class="skill-card-title">Certifications</span>
                 <span class="skill-card-count"><?= count($categoryDocuments['certifications']) ?> documents</span>
             </button>
@@ -301,41 +323,12 @@ function renderSkillDocumentCards($documents) {
                 </div>
             <?php endif; ?>
 
-            <div class="skills-category-content" id="category-minutes">
-                <div class="skills-documents-grid">
-                    <?php renderSkillDocumentCards($categoryDocuments['minutes']); ?>
-                </div>
-            </div>
-
-            <div class="skills-category-content" id="category-reflection">
-                <div class="skills-documents-grid">
-                    <?php renderSkillDocumentCards($categoryDocuments['reflection']); ?>
-                </div>
-            </div>
-
-            <div class="skills-category-content" id="category-feedback">
-                <div class="skills-documents-grid">
-                    <?php renderSkillDocumentCards($categoryDocuments['feedback']); ?>
-                </div>
-            </div>
-
-            <div class="skills-category-content" id="category-presentations">
-                <div class="skills-documents-grid">
-                    <?php renderSkillDocumentCards($categoryDocuments['presentations']); ?>
-                </div>
-            </div>
-
-            <div class="skills-category-content" id="category-training">
-                <div class="skills-documents-grid">
-                    <?php renderSkillDocumentCards($categoryDocuments['training']); ?>
-                </div>
-            </div>
-
-            <div class="skills-category-content" id="category-certifications">
-                <div class="skills-documents-grid">
-                    <?php renderSkillDocumentCards($categoryDocuments['certifications']); ?>
-                </div>
-            </div>
+            <div class="skills-category-content" id="category-minutes"><div class="skills-documents-grid"><?php renderSkillDocumentCards($categoryDocuments['minutes'], $isAdmin); ?></div></div>
+            <div class="skills-category-content" id="category-reflection"><div class="skills-documents-grid"><?php renderSkillDocumentCards($categoryDocuments['reflection'], $isAdmin); ?></div></div>
+            <div class="skills-category-content" id="category-feedback"><div class="skills-documents-grid"><?php renderSkillDocumentCards($categoryDocuments['feedback'], $isAdmin); ?></div></div>
+            <div class="skills-category-content" id="category-presentations"><div class="skills-documents-grid"><?php renderSkillDocumentCards($categoryDocuments['presentations'], $isAdmin); ?></div></div>
+            <div class="skills-category-content" id="category-training"><div class="skills-documents-grid"><?php renderSkillDocumentCards($categoryDocuments['training'], $isAdmin); ?></div></div>
+            <div class="skills-category-content" id="category-certifications"><div class="skills-documents-grid"><?php renderSkillDocumentCards($categoryDocuments['certifications'], $isAdmin); ?></div></div>
         </section>
     </main>
 
@@ -375,12 +368,10 @@ function renderSkillDocumentCards($documents) {
     <div class="file-viewer-overlay" id="fileViewerOverlay">
         <div class="file-viewer-modal">
             <button type="button" class="file-viewer-close" id="fileViewerClose">&times;</button>
-
             <div class="file-viewer-header">
                 <h2 class="file-viewer-title" id="fileViewerTitle">Document Viewer</h2>
                 <p class="file-viewer-subtitle">Preview your uploaded file without leaving the page.</p>
             </div>
-
             <div class="file-viewer-body" id="fileViewerBody"></div>
         </div>
     </div>
