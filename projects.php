@@ -11,7 +11,11 @@ $msgs = [];
 
 require("includes/db_connect.php");
 
-$allowedExtensions = ['pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'jpg', 'jpeg', 'png', 'zip'];
+$allowedExtensions = [
+    'pdf', 'doc', 'docx', 'ppt', 'pptx',
+    'xls', 'xlsx', 'jpg', 'jpeg', 'png',
+    'zip', 'txt', 'md', 'ino', 'c', 'cpp', 'h', 'fig'
+];
 
 if ($isAdmin && $_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["add_project_submit"])) {
     $title = trim($_POST["title"] ?? '');
@@ -31,8 +35,8 @@ if ($isAdmin && $_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["add_proje
 
         if (!in_array($extension, $allowedExtensions, true)) {
             $msgs[] = "This file type is not allowed.";
-        } elseif ($fileSize > 10 * 1024 * 1024) {
-            $msgs[] = "File is too large. Maximum size is 10MB.";
+        } elseif ($fileSize > 30 * 1024 * 1024) {
+            $msgs[] = "File is too large. Maximum size is 30MB.";
         } else {
             $uploadFolder = "uploads/projects/";
 

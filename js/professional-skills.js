@@ -35,14 +35,14 @@ const icons = {
             <path d="M16 4v14"></path>
         </svg>
     `,
-    training: `
+    others: `
         <svg class="skill-svg-icon details-svg-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M12 3 4 7l8 4 8-4-8-4z"></path>
             <path d="M4 12l8 4 8-4"></path>
             <path d="M4 17l8 4 8-4"></path>
         </svg>
     `,
-    certifications: `
+    agendasandcodesofconducts: `
         <svg class="skill-svg-icon details-svg-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <circle cx="12" cy="8" r="4"></circle>
             <path d="M10 12.5 8 21l4-2 4 2-2-8.5"></path>

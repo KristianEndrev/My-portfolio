@@ -11,8 +11,12 @@ $msgs = [];
 
 require("includes/db_connect.php");
 
-$allowedCategories = ['minutes', 'reflection', 'feedback', 'presentations', 'training', 'certifications'];
-$allowedExtensions = ['pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'jpg', 'jpeg', 'png', 'zip'];
+$allowedCategories = ['minutes', 'reflection', 'feedback', 'presentations', 'others', 'agendasandcodesofconducts'];
+$allowedExtensions = [
+    'pdf', 'doc', 'docx', 'ppt', 'pptx',
+    'xls', 'xlsx', 'jpg', 'jpeg', 'png',
+    'zip', 'txt', 'md', 'ino', 'c', 'cpp', 'h', 'fig'
+];
 
 if ($isAdmin && $_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["add_skill_file_submit"])) {
     $category = trim($_POST["category"] ?? '');
@@ -32,8 +36,8 @@ if ($isAdmin && $_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["add_skill
 
         if (!in_array($extension, $allowedExtensions, true)) {
             $msgs[] = "This file type is not allowed.";
-        } elseif ($fileSize > 10 * 1024 * 1024) {
-            $msgs[] = "File is too large. Maximum size is 10MB.";
+        } elseif ($fileSize > 30 * 1024 * 1024) {
+            $msgs[] = "File is too large. Maximum size is 30MB.";
         } else {
             $uploadFolder = "uploads/professional-skills/";
 
@@ -132,8 +136,8 @@ $categoryDocuments = [
     'reflection' => [],
     'feedback' => [],
     'presentations' => [],
-    'training' => [],
-    'certifications' => []
+    'others' => [],
+    'agendasandcodesofconducts' => []
 ];
 
 if ($dbHandler) {
@@ -272,16 +276,16 @@ function renderSkillDocumentCards($documents, $isAdmin) {
                 <span class="skill-card-count"><?= count($categoryDocuments['presentations']) ?> documents</span>
             </button>
 
-            <button class="skill-category-card" type="button" data-category="training" data-title="Training & Workshops" data-subtitle="Access workshop records and training files">
+            <button class="skill-category-card" type="button" data-category="others" data-title="Others" data-subtitle="View other professional documents">
                 <span class="skill-icon-box"><svg class="skill-svg-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 4 7l8 4 8-4-8-4z"></path><path d="M4 12l8 4 8-4"></path><path d="M4 17l8 4 8-4"></path></svg></span>
-                <span class="skill-card-title">Training & Workshops</span>
-                <span class="skill-card-count"><?= count($categoryDocuments['training']) ?> documents</span>
+                <span class="skill-card-title">Other professional skills</span>
+                <span class="skill-card-count"><?= count($categoryDocuments['others']) ?> documents</span>
             </button>
 
-            <button class="skill-category-card" type="button" data-category="certifications" data-title="Certifications" data-subtitle="Browse earned certificates and achievements">
+            <button class="skill-category-card" type="button" data-category="agendasandcodesofconducts" data-title="Agendas & Codes Of Conduct" data-subtitle="Browse through meeting agendas and planning documents">
                 <span class="skill-icon-box"><svg class="skill-svg-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M10 12.5 8 21l4-2 4 2-2-8.5"></path></svg></span>
-                <span class="skill-card-title">Certifications</span>
-                <span class="skill-card-count"><?= count($categoryDocuments['certifications']) ?> documents</span>
+                <span class="skill-card-title">Agendas & Codes Of Conduct</span>
+                <span class="skill-card-count"><?= count($categoryDocuments['agendasandcodesofconducts']) ?> documents</span>
             </button>
 
             <span class="moving-active-dot" id="movingActiveDot"></span>
@@ -327,8 +331,8 @@ function renderSkillDocumentCards($documents, $isAdmin) {
             <div class="skills-category-content" id="category-reflection"><div class="skills-documents-grid"><?php renderSkillDocumentCards($categoryDocuments['reflection'], $isAdmin); ?></div></div>
             <div class="skills-category-content" id="category-feedback"><div class="skills-documents-grid"><?php renderSkillDocumentCards($categoryDocuments['feedback'], $isAdmin); ?></div></div>
             <div class="skills-category-content" id="category-presentations"><div class="skills-documents-grid"><?php renderSkillDocumentCards($categoryDocuments['presentations'], $isAdmin); ?></div></div>
-            <div class="skills-category-content" id="category-training"><div class="skills-documents-grid"><?php renderSkillDocumentCards($categoryDocuments['training'], $isAdmin); ?></div></div>
-            <div class="skills-category-content" id="category-certifications"><div class="skills-documents-grid"><?php renderSkillDocumentCards($categoryDocuments['certifications'], $isAdmin); ?></div></div>
+            <div class="skills-category-content" id="category-others"><div class="skills-documents-grid"><?php renderSkillDocumentCards($categoryDocuments['others'], $isAdmin); ?></div></div>
+            <div class="skills-category-content" id="category-agendasandcodesofconducts"><div class="skills-documents-grid"><?php renderSkillDocumentCards($categoryDocuments['agendasandcodesofconducts'], $isAdmin); ?></div></div>
         </section>
     </main>
 

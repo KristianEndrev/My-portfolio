@@ -20,7 +20,11 @@ $allowedCategories = [
     'charts-period-plans'
 ];
 
-$allowedExtensions = ['pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'jpg', 'jpeg', 'png', 'zip'];
+$allowedExtensions = [
+    'pdf', 'doc', 'docx', 'ppt', 'pptx',
+    'xls', 'xlsx', 'jpg', 'jpeg', 'png',
+    'zip', 'txt', 'md', 'ino', 'c', 'cpp', 'h', 'fig'
+];
 
 if ($isAdmin && $_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["add_documentation_file_submit"])) {
     $category = trim($_POST["category"] ?? '');
